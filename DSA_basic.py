@@ -23,7 +23,7 @@ g.add_edge(0,1,34)
 g.add_edge(0,4,22)
 g.add_edge(1,2,9)
 
-g.print_matrix()
+g.print_matrix() 
 
 
 
