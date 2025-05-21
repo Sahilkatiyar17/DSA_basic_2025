@@ -58,3 +58,93 @@ g.add_edge(0,4)
 g.add_edge(1,2)
 
 g.print_graph()
+
+
+
+
+
+
+#dfs - iterative
+def reverse_list(arr):
+  reversed_arr = []
+  for i in range(len(arr)-1,-1,-1):
+    reversed_arr.append(arr[i])
+  return reversed_arr
+def dfs(graph,start):
+  visited =set()
+  stack = [start]
+
+  while stack:
+    node = stack.pop()
+    if node not in visited:
+      print(node,end=" ")
+      visited.add(node)
+      for neighbor in reverse_list(graph[node]):
+        if neighbor not in visited:
+          stack.append(neighbor)
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+dfs(graph, 'A')
+
+
+
+
+#DFS - recursive
+
+def dfs(graph,start,visited=None):
+  if visited is None:
+    visited = set()
+
+  if start not in visited:
+    print(start,end=" ")
+    visited.add(start)
+    for neighbor in graph[start]:
+      dfs(graph , neighbor ,visited)
+
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+dfs(graph, 'A')
+
+
+
+
+#BFS
+from collections import deque
+def bfs(graph,start):
+  visited = set()
+  queue = deque([start])
+
+  while queue:
+    node = queue.popleft()
+    if node not in visited:
+      print(node,end=" ")
+      visited.add(node)
+      for neighbor in graph[node]:
+        if neighbor not in visited:
+          queue.append(neighbor)
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+bfs(graph,"A")
