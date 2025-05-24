@@ -148,3 +148,75 @@ graph = {
 }
 
 bfs(graph,"A")
+
+
+
+
+
+def detect_cycle(node,parent,adj_list,visited):
+  visited[node]=1
+  for neighbor in adj_list[node]:
+    if parent == neighbor:
+      continue
+    if visited[neighbor]==1:
+      return True
+    if delect_Cycle(neighbor,node,adj_list,visited):
+      return True
+  return False
+
+
+graph = {
+    0: [1],
+    1: [0,2,4],
+    2: [1,3],
+    3: [2,4],
+    4: [1,3]
+
+}
+
+visited = [0]*len(graph)
+
+if delect_Cycle(0,-1,graph,visited) == True:
+  print("Cycle is present")
+else:
+  print("Cycle is not present")
+
+
+
+
+
+
+
+from collections import deque
+
+def delect_Cycle(start, parent, adj_list, visited):
+    visited[start] = 1
+    q = deque()
+    q.append((start, parent))
+
+    while q:
+        node, parent = q.popleft()
+        for neighbor in adj_list[node]:
+            if neighbor == parent:
+                continue
+            if visited[neighbor] == 1:
+                return True  # Cycle detected
+            visited[neighbor] = 1
+            q.append((neighbor, node))
+
+    return False
+
+graph = {
+    0: [1],
+    1: [0, 2, 4],
+    2: [1, 3],
+    3: [2, 4],
+    4: [1, 3]
+}
+
+visited = [0] * len(graph)
+
+if delect_Cycle(0, -1, graph, visited):
+    print("Cycle is present")
+else:
+    print("Cycle is not present")
