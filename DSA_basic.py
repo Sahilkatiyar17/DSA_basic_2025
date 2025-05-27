@@ -220,3 +220,90 @@ if delect_Cycle(0, -1, graph, visited):
     print("Cycle is present")
 else:
     print("Cycle is not present")
+
+
+
+
+
+
+
+
+
+
+
+# topological sort using DFS
+def dfs(node,graph,visited,stack):
+  visited[node]=1
+  for neighbor in graph[node]:
+    if visited[neighbor]==0:
+      dfs(neighbor,graph,visited,stack)
+  stack.append(node)
+
+def main(graph):
+  visited = {}
+  for node in graph:                               # DICTIONARY
+    visited[node]=0
+  stack = []
+  for i in range(len(visited)):
+    if visited[i]==0:
+      dfs(i,graph,visited,stack)
+  return stack[::-1]
+
+graph = {
+    0: [1],
+    1: [2],
+    2: [3],
+    3: [],
+    4: [5],
+    5: [0]
+}
+
+print(main(graph))
+
+
+
+
+
+#topological  sort using BFS
+from collections import deque
+def topological_bfs(graph):
+  ans = []
+
+  # Indeg mein store kiya values
+  """Indeg = [0]*len(graph)
+  for node in graph:                        # ARRAY
+    for neighbor in graph[node]:
+      Indeg[neighbor]+=1"""
+  Indeg = {node:0 for node in graph}
+  for node in graph:                        # DICTIONARY
+    for neighbor in graph[node]:
+      Indeg[neighbor]+=1
+
+  #bfs 
+  queue = deque()
+  for i in range(len(Indeg)):
+    if Indeg[i]==0:
+      queue.append(i)
+
+  while queue:
+    node = queue.popleft()
+    ans.append(node)
+
+    for neighbor in graph[node]:
+      Indeg[neighbor]-=1
+      if Indeg[neighbor]==0:
+        queue.append(neighbor)
+  return ans
+
+g = {
+    0:[1,2],
+    1:[3,4],
+    2:[]
+    ,3:[4]
+    ,4:[]
+    ,5:[6,4]
+    ,6:[3]
+}
+
+
+print(topological_bfs(g))
