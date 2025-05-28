@@ -307,3 +307,103 @@ g = {
 
 
 print(topological_bfs(g))
+
+
+
+
+
+
+
+
+# date - 28/5       #dfs
+def detect_c_direct(node,graph,path):
+  path[node]=1
+  for n in graph[node]:
+    if path[n]==1:
+      return True
+    if detect_c_direct(n,graph,path):
+      return True
+  path[node]=0
+  return False
+
+
+g = {
+    0:[1],
+    1:[2],
+    2:[3,5,7],
+    3:[4],
+    4:[6],
+    5:[4],
+    6:[],
+    7:[8],
+    8:[]
+}
+
+gr = {
+    0:[1],
+    1:[2],
+    2:[3,7],
+    3:[4],
+    4:[5,6],
+    5:[2],
+    6:[],
+    7:[8],
+    8:[]
+}
+path=[0]*len(g)
+a=detect_c_direct(0,gr,path)
+print(a)
+
+
+
+# date - 28/5    #bfs 
+def detect_c_directed(graph):
+  indeg=[0]*len(graph)
+
+  for i in range(len(graph)):
+    for j in graph[i]:
+      indeg[j]+=1
+
+  queue=[]
+  for i in range(len(graph)):
+    if indeg[i]==0:
+      queue.append(i)
+  
+  cnt=0
+
+  while queue:
+    node = queue.pop(0)
+    for n in graph[node]:
+      indeg[n]-=1 
+      if indeg[n]==0:
+        queue.append(n)
+    cnt+=1
+  if cnt==len(graph):
+    return False
+  else:
+    return True
+gr = {
+    0:[1],
+    1:[2],
+    2:[3,7],
+    3:[4],
+    4:[5,6],
+    5:[2],
+    6:[],
+    7:[8],
+    8:[]
+}
+
+g = {
+    0:[1],
+    1:[2],
+    2:[3,5,7],
+    3:[4],
+    4:[6],
+    5:[4],
+    6:[],
+    7:[8],
+    8:[]
+}
+print(detect_c_directed(g))
+ 
