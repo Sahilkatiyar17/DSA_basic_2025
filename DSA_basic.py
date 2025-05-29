@@ -406,4 +406,104 @@ g = {
     8:[]
 }
 print(detect_c_directed(g))
- 
+
+
+
+
+
+
+
+
+
+from collections import deque
+def bfs(start,graph):
+    queue = deque([start])
+
+    color = [-1]*len(graph)
+    color[start]=0
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if color[neighbor]==-1:
+                if  color[node]==0:
+                    color[neighbor]=1
+                else:
+                    color[neighbor]=0
+                queue.append(neighbor)
+            else:
+                if color[node]==color[neighbor]:
+                    return False
+    return True
+
+
+g = {
+    0:[1],
+    1:[0,2,3],
+    2:[1],
+    3:[1,4,5,8],
+    4:[3],
+    5:[3,6],
+    6:[5,7],
+    7:[6,8],
+    8:[7,3],
+}
+
+
+gr = {
+    0: [3, 4],
+    1: [3, 5],
+    2: [4, 5],
+    3: [0, 1],
+    4: [0, 2],
+    5: [1, 2]
+}
+print(bfs(0,gr))
+
+
+
+
+
+
+def dfs(node,graph,color):
+  for i in graph[node]:
+    if color[i]==-1:
+      color[i]=(color[node]+1)%2
+      if not dfs(i,graph,color):
+        return False
+    else:
+      if color[i]==color[node]:
+        return False
+  return True
+
+def main(graph):
+  color = [-1]*len(graph)
+  for i in range(len(graph)):
+    if color[i]==-1:
+      color[i]=0
+      if not dfs(i,graph,color):
+        return False
+  return True
+
+
+  g = {
+    0:[1],
+    1:[0,2,3],
+    2:[1],
+    3:[1,4,5,8],
+    4:[3],
+    5:[3,6],
+    6:[5,7],
+    7:[6,8],
+    8:[7,3],
+}
+gr = {
+    0: [3, 4],
+    1: [3, 5],
+    2: [4, 5],
+    3: [0, 1],
+    4: [0, 2],
+    5: [1, 2]
+}
+print(main(g))
+print(main(gr))
